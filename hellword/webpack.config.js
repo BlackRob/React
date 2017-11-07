@@ -1,16 +1,20 @@
-var path = require('path')
-var webpack = require('webpack');
+const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+
 module.exports = {
     entry: [
         'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:9876',
         'webpack/hot/only-dev-server',
         './src/app.js'
     ],
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/'
+        //publicPath: '/'
     },
     module:{
         rules:[{
@@ -20,18 +24,20 @@ module.exports = {
             loader: "babel-loader"
         },{
         test: /\.scss$/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader", options: {
-              sourceMap: true,
-              modules: true
-            }
-        }, {
-            loader: "sass-loader", options: {
-              sourceMap: true
-          }
-        }]
+        use: ExtractTextPlugin.extract({
+            use: [{
+                loader: "css-loader", options: {
+                  sourceMap: true,
+                  modules: true
+                }
+            }, {
+                loader: "sass-loader", options: {
+                  sourceMap: true
+                }
+            }],
+            // use style-loader in development
+            fallback: "style-loader"
+          })
     }]},
     devtool: "source-map",
     devServer: {
@@ -43,5 +49,17 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-    ],
+        new CleanWebpackPlugin(['dist']),
+        new ExtractTextPlugin('style.css'),
+        new HtmlWebpackPlugin({
+            template: 'src/index.ejs',
+            inject: 'body',
+        }),new UglifyJSPlugin({
+            test: /\.js($|\?)/i,
+            sourceMap: true,
+            uglifyOptions: {
+                compress: true
+            }
+        })
+    ]
 }

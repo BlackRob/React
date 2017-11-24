@@ -1,42 +1,122 @@
 #appContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  margin: auto;
+  padding: 0;
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
 }
 
 #butts {
-  position: relative;
+  position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
 }
 
-#controls {
+#controlsContainer {
   position: absolute;
-  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: grid;
+  grid-template-columns: auto ;
+  grid-template-rows: auto ;
+  grid-gap: 0px 0px;
+  margin: 0;
+  color: #cccccc;
+}
+#controls button {
+  width: 104px;
+  height: 48px; 
+  background-color: black;
+  border: 1px solid #cccccc;
+  color: #cccccc;
+}
+#controls button:hover {
+  background-color: #333333;
+}
+#controls button:active {
+  background-color: #333333;
+}
+#controls button:focus {
+    outline: none;
+}
+#startButton {
+  padding-top: 16px;
+  padding-bottom: 8px;
+  border-top-left-radius: 50% 85%;
+  border-top-right-radius: 50% 85%;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  
+}
+#modeButton {
+  padding-top: 8px;
+  padding-bottom: 16px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  border-bottom-left-radius: 50% 85%;
+  border-bottom-right-radius: 50% 85%;
+  
+  height: 48px; 
 }
 
-#controls button {
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0,0,0,.5);
+table {
+  font-size: x-small;
+  margin: 10px auto;
 }
-#controls h4 {
-  background-color: white;
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+  width: 2em;
+}
+
+#gm {
+  font-size: x-small;
+  margin-bottom: 6px;
+}
+
+#comments {
+  display: block;
+  height: 100vh;
+  width: 100%;
+  overflow: scroll;
+  margin: 0;
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  left: 0;
+  top: 0;
+  padding-top: 16px;
+  background: rgba(0,0,0,0.8);
+}
+#infoBlock {
+  position: relative;
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+  background: white;
   border: 1px solid black;
-  border-radius: 5px;
-  height: 30px;
-  margin: 20px 0px 0px 0px;
-  box-shadow: 0px 0px 5px rgba(0,0,0,.5);
+  color: black;
+  padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#infoBlock p {
+  font-size: 0.7em;
+}
+#facts {
+  font-size: 1.4em;
+  color: #444;
+  width: 100%;
+  line-height: 1.6em;
+}
+#closeFacts {
+  float: right;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: -16px;
 }

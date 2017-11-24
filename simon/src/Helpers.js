@@ -17,24 +17,36 @@ export const pause = (optionObject) => {
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 
+// first number is the frequency of the tone, second is a gain 
+// adjustment: higher frequencies sound louder... not sure if this is
+// the correct way to deal with it, but it seems to work
 const sounds = {
-  b: 329, bb: 658,
-  y: 277, yy: 554,
-  r: 440, rr: 880,
-  g: 165, gg: 329,
-  n: 220
+  b: [329, 0.501], bb: [658, 0.251],
+  y: [277, 0.596], yy: [554, 0.297],
+  r: [440, 0.375], rr: [880, 0.187],
+  g: [165, 1], gg: [329, 0.501],
+  n: [220, 0.75]
 }
 export function playSound(optionObject) {
   let sound = optionObject.tone
   let duration = optionObject.toneTime // seconds
+  let volumeTweak = sounds[sound][1]
+
   let oscillator = audioCtx.createOscillator()
+  let gainNode = audioCtx.createGain()
   let currentTime = audioCtx.currentTime;
-  audioCtx.volume = 1
+
+  gainNode.gain.value = 0;
   oscillator.type = "sine"
-  oscillator.frequency.value = sounds[sound]
-  oscillator.connect(audioCtx.destination)
+  oscillator.frequency.value = sounds[sound][0]
+  oscillator.connect(gainNode)
+  gainNode.connect(audioCtx.destination)
+
   oscillator.start(currentTime)
-  oscillator.stop(currentTime + duration)
+  gainNode.gain.setTargetAtTime(volumeTweak, currentTime, 0.03)
+  gainNode.gain.setTargetAtTime(0, currentTime + duration - 0.03, 0.03)
+  oscillator.stop(currentTime + duration + 0.1)
+
   return new Promise(resolve => {
     resolve(optionObject)
   })
@@ -92,13 +104,13 @@ export class MySvg extends React.Component {
     super(props)
     // colors
     this.red0 = "#CC022B"
-    this.red1 = "#FF355E"
+    this.red1 = "#FF4F78"
     this.yel0 = "#FFDB00"
-    this.yel1 = "#FFFF66"
+    this.yel1 = "#FFFF4D"
     this.grn0 = "#3AA655"
-    this.grn1 = "#66FF66"
+    this.grn1 = "#87F3A2"
     this.blu0 = "#0066CC"
-    this.blu1 = "#50BFE6"
+    this.blu1 = "#4DB3FF"
     this.m = 15 // margin around/between buttons
   }
   render() {

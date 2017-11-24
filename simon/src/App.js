@@ -45,9 +45,13 @@ export default class Simon extends React.Component {
     }
   }
   setSize() {
-    let width = Math.max(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth)
-    let height = Math.max(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight)
+    //let width = Math.max(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth)
+    //let height = Math.max(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight)
+    let width = Math.max(document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth)
+    let height = Math.max(document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight)
     this.setState({w: width, h: height})
+    //console.log("iw: " + window.innerWidth + " ; docCW: " +  document.documentElement.clientWidth + " ; bodyCW: " +  document.getElementsByTagName('body')[0].clientWidth)
+    //console.log("ih: " + window.innerHeight + " ; docCH: " +  document.documentElement.clientHeight + " ; bodyCH: " +  document.getElementsByTagName('body')[0].clientHeight)
   }
   componentWillMount() {
     window.addEventListener("resize", this.setSize)
